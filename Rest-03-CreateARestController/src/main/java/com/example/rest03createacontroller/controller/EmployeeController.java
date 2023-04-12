@@ -1,5 +1,6 @@
 package com.example.rest03createacontroller.controller;
 
+import com.example.rest03createacontroller.entity.Employee;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,4 +31,12 @@ public class EmployeeController {
     public String deleteEmployee(@RequestParam("id")Long id){
         return "Deleting the employee details for the id "+id;
     }
+    @PostMapping("/employeess")
+    public String saveEmployee(@RequestBody Employee employee){
+        return "save the employee details to the database "+employee;
+    }
 }
+
+
+
+
