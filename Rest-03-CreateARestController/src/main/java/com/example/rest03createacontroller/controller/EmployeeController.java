@@ -24,4 +24,10 @@ public class EmployeeController {
     public String getEmployee(@PathVariable("id")Long id){
         return "Fetching the employee details for id "+id;
     }
+    @DeleteMapping("/employeess")
+//    http://localhost:8080/employeess?id=78
+    //check on Postman
+    public String deleteEmployee(@RequestParam("id")Long id){
+        return "Deleting the employee details for the id "+id;
+    }
 }
