@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @ToString
 public class Employee {
-    private int id;
+    private Long id;
     private String name;
     private Long age;
     private String location;
