@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+
 public class Employee {
     private Long id;
     // @JsonProperty("full_name") //thay đổi tên trường khi sử dụng
