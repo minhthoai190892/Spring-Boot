@@ -12,6 +12,7 @@ import java.util.List;
 //nhận biết class controller
 //@Controller
 @RestController // @Controller+ @ResponseBody
+@RequestMapping("/api/v1")//http://localhost:8080/api/v1/employeess
 public class EmployeeController {
     //tạo trường service
     private EmployeeService service;
