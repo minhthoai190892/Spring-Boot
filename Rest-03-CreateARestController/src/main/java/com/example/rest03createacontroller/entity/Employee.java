@@ -12,11 +12,15 @@ import lombok.*;
 @ToString
 public class Employee {
     private Long id;
-    @JsonProperty("full_name") //thay đổi tên trường khi sử dụng
+    // @JsonProperty("full_name") //thay đổi tên trường khi sử dụng
     private String name;
-    @JsonIgnore //đánh dấu ẩn tên trường
+    // @JsonIgnore //đánh dấu ẩn tên trường
     private Long age;
     private String location;
     private String email;
     private String department;
 }
+
+
+
+
