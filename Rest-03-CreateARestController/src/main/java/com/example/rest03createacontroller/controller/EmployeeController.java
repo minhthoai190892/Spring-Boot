@@ -46,8 +46,9 @@ public class EmployeeController {
 
     @GetMapping("/employeess/{id}")
 //    http://localhost:8080/employeess/12
-    public String getEmployee(@PathVariable Long id) {
-        return "Fetching the employee details for id " + id;
+    public Employee getEmployee(@PathVariable Long id) {
+        System.out.println("Fetching the employee details for id " + id);
+        return service.getSingleEmployee(id);
     }
 
     @DeleteMapping("/employeess")
