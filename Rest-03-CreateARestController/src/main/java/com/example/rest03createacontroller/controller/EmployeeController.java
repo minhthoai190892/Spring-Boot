@@ -70,7 +70,8 @@ public class EmployeeController {
 //    http://localhost:8080/employeess/2
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
         System.out.println("Updating the employee data for the id " + id);
-        return employee;
+        employee.setId(id);
+        return service.updateEmployee(employee);
     }
 }
 
