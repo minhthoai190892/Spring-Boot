@@ -1,0 +1,16 @@
+  04-Add-Dependencies[m
+  05-Path-Variable[m
+  06-Request-Param[m
+  07-Organize-APIs-in-Postman[m
+  08-Map-the-JSON-data-to-Java-Object[m
+  09-HTTP-PUT-Method[m
+  10-Read-properties-using-@Value-annotation[m
+  11-Change-the-server-port[m
+  12-Create-executable-jar[m
+  13-Jackson-@JsonIgnore-and-@JsonProperty[m
+  14-Create-Service[m
+  15-Change-the-Base-URL[m
+  16-Create-Database-and-Table[m
+  17-Configure-datasource[m
+* [32m18-Create-an-entity-class[m
+  main[m
