@@ -5,6 +5,8 @@ import com.example.rest03createacontroller.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,38 +43,40 @@ public class EmployeeController {
 
     @GetMapping("/employeess")
 //    http://localhost:8080/employeess
-    public List<Employee> getEmployees1() {
-       return service.getEmployees();
+    public ResponseEntity<List<Employee>> getEmployees1() {
+       return new ResponseEntity<List<Employee>>(service.getEmployees(),HttpStatus.OK);
     }
 
     @GetMapping("/employeess/{id}")
 //    http://localhost:8080/employeess/12
-    public Employee getEmployee(@PathVariable Long id) {
+    public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
         System.out.println("Fetching the employee details for id " + id);
-        return service.getSingleEmployee(id);
+        return new ResponseEntity<>(service.getSingleEmployee(id),HttpStatus.OK);
     }
 
     @DeleteMapping("/employeess")
 //    http://localhost:8080/employeess?id=78
     //check on Postman
-    public void deleteEmployee(@RequestParam("id") Long id) {
+    public ResponseEntity<HttpStatus> deleteEmployee(@RequestParam("id") Long id) {
         System.out.println( "Deleting the employee details for the id " + id);
-          service.deleteEmployee(id);
+        service.deleteEmployee(id);
+          return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/employeess")
 //    http://localhost:8080/employeess
-    public Employee saveEmployee(@Valid  @RequestBody Employee employee) {
+    public ResponseEntity<Employee> saveEmployee(@Valid  @RequestBody Employee employee) {
         System.out.println("save the employee details to the database " + employee);
-        return service.saveEmployee(employee);
+
+        return new ResponseEntity<Employee>(service.saveEmployee(employee),HttpStatus.CREATED);
     }
 
     @PutMapping("/employeess/{id}")
 //    http://localhost:8080/employeess/2
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
         System.out.println("Updating the employee data for the id " + id);
         employee.setId(id);
-        return service.updateEmployee(employee);
+        return new ResponseEntity<>(service.updateEmployee(employee),HttpStatus.OK);
     }
 }
 
