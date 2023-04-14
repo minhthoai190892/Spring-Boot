@@ -78,6 +78,10 @@ public class EmployeeController {
         employee.setId(id);
         return new ResponseEntity<>(service.updateEmployee(employee),HttpStatus.OK);
     }
+    @GetMapping("/employeess/filterByName")
+    public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name){
+return new ResponseEntity<>(service.getEmployeesByName(name),HttpStatus.OK);
+    }
 }
 
 
