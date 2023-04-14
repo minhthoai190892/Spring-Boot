@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -30,4 +34,10 @@ public class Employee {
     private String email;
     @Column(name = "department")
     private String department;
+    @CreationTimestamp
+    @Column(name = "create_at",nullable = false,updatable = false)
+    private Date createAt;
+    @UpdateTimestamp
+    @Column(name = "update_at")
+    private Date updateAt;
 }
