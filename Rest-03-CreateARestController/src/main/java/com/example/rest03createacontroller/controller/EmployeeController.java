@@ -54,8 +54,9 @@ public class EmployeeController {
     @DeleteMapping("/employeess")
 //    http://localhost:8080/employeess?id=78
     //check on Postman
-    public String deleteEmployee(@RequestParam("id") Long id) {
-        return "Deleting the employee details for the id " + id;
+    public void deleteEmployee(@RequestParam("id") Long id) {
+        System.out.println( "Deleting the employee details for the id " + id);
+          service.deleteEmployee(id);
     }
 
     @PostMapping("/employeess")
