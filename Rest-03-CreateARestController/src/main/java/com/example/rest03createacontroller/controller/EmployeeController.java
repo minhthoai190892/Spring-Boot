@@ -2,6 +2,7 @@ package com.example.rest03createacontroller.controller;
 
 import com.example.rest03createacontroller.entity.Employee;
 import com.example.rest03createacontroller.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +62,7 @@ public class EmployeeController {
 
     @PostMapping("/employeess")
 //    http://localhost:8080/employeess
-    public Employee saveEmployee(@RequestBody Employee employee) {
+    public Employee saveEmployee(@Valid  @RequestBody Employee employee) {
         System.out.println("save the employee details to the database " + employee);
         return service.saveEmployee(employee);
     }
