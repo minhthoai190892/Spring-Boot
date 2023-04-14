@@ -4,7 +4,6 @@ import com.example.rest03createacontroller.entity.Employee;
 import com.example.rest03createacontroller.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,8 +59,9 @@ public class EmployeeController {
 
     @PostMapping("/employeess")
 //    http://localhost:8080/employeess
-    public String saveEmployee(@RequestBody Employee employee) {
-        return "save the employee details to the database " + employee;
+    public Employee saveEmployee(@RequestBody Employee employee) {
+        System.out.println("save the employee details to the database " + employee);
+        return service.saveEmployee(employee);
     }
 
     @PutMapping("/employeess/{id}")
