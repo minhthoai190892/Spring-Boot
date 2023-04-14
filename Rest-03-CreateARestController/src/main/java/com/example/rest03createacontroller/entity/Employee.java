@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,12 +34,13 @@ public class Employee {
     // @JsonIgnore //đánh dấu ẩn tên trường
     private Long age;
     @Column(name = "location")
+    @NotBlank(message = "Location not blank")
     private String location;
     @Column(name = "email")
-    @NotNull(message = "Email can not null")
     @Email(message = "Email invalid")
     private String email;
     @Column(name = "department")
+    @NotEmpty(message = "department not empty")
     private String department;
     @CreationTimestamp
     @Column(name = "create_at",nullable = false,updatable = false)
