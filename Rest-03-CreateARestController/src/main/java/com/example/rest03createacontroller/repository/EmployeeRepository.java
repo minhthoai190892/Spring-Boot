@@ -11,4 +11,7 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     List<Employee> findByName(String name);
 //    select * from table where name="key" and location="key";
     List<Employee> findByNameAndLocation(String name,String location);
+    //    select * from table where name like "%key%"
+    List<Employee> findByNameContaining(String name);
+
 }

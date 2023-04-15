@@ -87,6 +87,10 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name, @RequestParam String location){
     return new ResponseEntity<>(service.getEmployeeByNameAndLocation(name,location),HttpStatus.OK);
     }
+    @GetMapping("/employeess/filterByKeyword")
+    public ResponseEntity<List<Employee>> getEmployeeByKeyword(@RequestParam String name){
+        return new ResponseEntity<>(service.getEmployeesByKeyword(name),HttpStatus.OK);
+    }
 }
 
 

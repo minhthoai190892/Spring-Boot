@@ -78,4 +78,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getEmployeeByNameAndLocation(String name, String location) {
         return employeeRepository.findByNameAndLocation(name,location);
     }
+
+    @Override
+    public List<Employee> getEmployeesByKeyword(String name) {
+        return employeeRepository.findByNameContaining(name);
+    }
 }

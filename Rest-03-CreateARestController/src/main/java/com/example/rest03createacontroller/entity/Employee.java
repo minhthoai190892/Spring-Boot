@@ -50,4 +50,4 @@ public class Employee {
     private Date updateAt;
 }
 
-33-JPA-Query-method-or-Finder-method-Part-3
+
