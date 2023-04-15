@@ -6,7 +6,7 @@ drop table if exists tbl_employee;
 create table tbl_employee(
 	id int not null auto_increment primary key,
     age int not null,
-    name varchar(255) not null,s
+    name varchar(255) not null,
     email varchar(255) not null,
     department varchar(255) not null,
     location varchar(255) not null

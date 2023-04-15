@@ -43,8 +43,8 @@ public class EmployeeController {
 
     @GetMapping("/employeess")
 //    http://localhost:8080/employeess
-    public ResponseEntity<List<Employee>> getEmployees1() {
-        return new ResponseEntity<List<Employee>>(service.getEmployees(), HttpStatus.OK);
+    public ResponseEntity<List<Employee>> getEmployees1(@RequestParam Integer pageNumber,@RequestParam Integer pageSize) {
+        return new ResponseEntity<List<Employee>>(service.getEmployees(pageNumber,pageSize), HttpStatus.OK);
     }
 
     @GetMapping("/employeess/{id}")
