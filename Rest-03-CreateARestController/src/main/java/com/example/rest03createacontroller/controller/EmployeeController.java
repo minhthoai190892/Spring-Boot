@@ -5,6 +5,7 @@ import com.example.rest03createacontroller.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -89,6 +90,7 @@ public class EmployeeController {
     }
     @GetMapping("/employeess/filterByKeyword")
     public ResponseEntity<List<Employee>> getEmployeeByKeyword(@RequestParam String name){
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
         return new ResponseEntity<>(service.getEmployeesByKeyword(name),HttpStatus.OK);
     }
 }

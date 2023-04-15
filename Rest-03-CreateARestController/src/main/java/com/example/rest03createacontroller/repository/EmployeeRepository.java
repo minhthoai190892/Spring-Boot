@@ -1,6 +1,7 @@
 package com.example.rest03createacontroller.repository;
 
 import com.example.rest03createacontroller.entity.Employee;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 //    select * from table where name="key" and location="key";
     List<Employee> findByNameAndLocation(String name,String location);
     //    select * from table where name like "%key%"
-    List<Employee> findByNameContaining(String name);
+    List<Employee> findByNameContaining(String name, Sort sort);
 
     Optional<Employee> findById(Long id);
 
