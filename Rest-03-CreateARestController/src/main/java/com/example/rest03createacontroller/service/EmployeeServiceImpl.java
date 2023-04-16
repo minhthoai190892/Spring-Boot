@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getEmployees(int pageNumber, int pageSize) {
-        Pageable pages = PageRequest.of(pageNumber,pageSize);
+        Pageable pages = PageRequest.of(pageNumber,pageSize, Sort.Direction.DESC,"id");
+
         return employeeRepository.findAll(pages).getContent();
     }
 
