@@ -98,6 +98,10 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>>getEmployeesByNameAndLocation(@PathVariable String name, @PathVariable String location){
         return new ResponseEntity<>(service.getEmployeesByNameOrLocation(name,location),HttpStatus.OK);
     }
+    @GetMapping("/employeess/delete/{name}")
+    public ResponseEntity<String>deleteEmployeeByName(@PathVariable String name){
+        return new ResponseEntity<>(service.deleteEmployeeByName(name)+" id ",HttpStatus.OK);
+    }
 }
 
 
