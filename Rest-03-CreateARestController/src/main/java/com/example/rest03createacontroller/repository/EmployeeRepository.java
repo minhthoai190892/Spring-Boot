@@ -4,6 +4,7 @@ import com.example.rest03createacontroller.entity.Employee;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +25,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     Employee save(Employee employee);
 
     void deleteById(Long id);
+    @Query("From Employee where name=:name or location =:location")
+    List<Employee> getEmployeesByNameOrLocation(String name, String location);
 
 }
