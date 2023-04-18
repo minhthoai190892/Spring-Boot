@@ -15,10 +15,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EmployeeRepository extends PagingAndSortingRepository<Employee,Long> {
+public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long> {
     List<Employee> findByName(String name);
-//    select * from table where name="key" and location="key";
-    List<Employee> findByNameAndLocation(String name,String location);
+
+    //    select * from table where name="key" and location="key";
+    List<Employee> findByNameAndLocation(String name, String location);
+
     //    select * from table where name like "%key%"
     List<Employee> findByNameContaining(String name, Sort sort);
 
@@ -27,10 +29,13 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     Employee save(Employee employee);
 
     void deleteById(Long id);
+
     @Query("From Employee where name=:name or location =:location")
     List<Employee> getEmployeesByNameOrLocation(String name, String location);
+
     @Transactional
     @Modifying
-@Query("delete FROM Employee where name=:name")
+    @Query("delete FROM Employee where name=:name")
     Integer deleteEmployeeByName(String name);
+
 }

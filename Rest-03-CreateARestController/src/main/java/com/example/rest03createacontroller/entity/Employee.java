@@ -1,5 +1,6 @@
 package com.example.rest03createacontroller.entity;
 
+import com.example.rest03createacontroller.request.EmployeeRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -26,7 +27,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @NotNull(message = "Name can not null")
+//    @NotNull(message = "Name can not null")
     @Column(name = "name")
     // @JsonProperty("full_name") //thay đổi tên trường khi sử dụng
     private String name;
@@ -34,20 +35,28 @@ public class Employee {
     // @JsonIgnore //đánh dấu ẩn tên trường
     private Long age;
     @Column(name = "location")
-    @NotBlank(message = "Location not blank")
+//    @NotBlank(message = "Location not blank")
     private String location;
     @Column(name = "email")
     @Email(message = "Email invalid")
     private String email;
-    @Column(name = "department")
-    @NotEmpty(message = "department not empty")
-    private String department;
+    @JoinColumn(name = "department_id")
+    @OneToOne
+    private Department department;
+
+    public Employee(EmployeeRequest request) {
+        this.name = request.getName();
+
+    }
+
     @CreationTimestamp
     @Column(name = "create_at",nullable = false,updatable = false)
     private Date createAt;
     @UpdateTimestamp
     @Column(name = "update_at")
     private Date updateAt;
+
+
 }
 
 

@@ -1,6 +1,10 @@
 package com.example.rest03createacontroller.controller;
 
+import com.example.rest03createacontroller.entity.Department;
 import com.example.rest03createacontroller.entity.Employee;
+import com.example.rest03createacontroller.repository.DepartmentRepository;
+import com.example.rest03createacontroller.repository.EmployeeRepository;
+import com.example.rest03createacontroller.request.EmployeeRequest;
 import com.example.rest03createacontroller.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +23,19 @@ import java.util.List;
 public class EmployeeController {
     //tạo trường service
     private EmployeeService service;
-
+    private DepartmentRepository departmentRepository;
+    private EmployeeRepository employeeRepository;
     //injection
-    @Autowired
-    public EmployeeController(EmployeeService service) {
+//    @Autowired
+//    public EmployeeController(EmployeeService service) {
+//        this.service = service;
+//    }
+@Autowired
+
+    public EmployeeController(EmployeeService service, DepartmentRepository departmentRepository,EmployeeRepository employeeRepository) {
         this.service = service;
+     this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     @Value("${app.name}")
@@ -67,10 +79,22 @@ public class EmployeeController {
 
     @PostMapping("/employeess")
 //    http://localhost:8080/employeess
-    public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee) {
-        System.out.println("save the employee details to the database " + employee);
+    public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
+        System.out.println("save the employee details to the database " + employeeRequest);
+        //create new Department
+        Department department = new Department();
+        //set value for department
+        department.setName(employeeRequest.getDepartment());
+        //save Department
+        department= departmentRepository.save(department);
 
-        return new ResponseEntity<Employee>(service.saveEmployee(employee), HttpStatus.CREATED);
+        //create new Employee
+        Employee employee = new Employee();
+        employee.setDepartment(department);
+        employee.setName(employeeRequest.getName());
+        employee = employeeRepository.save(employee);
+        return new ResponseEntity<>(employee,HttpStatus.CREATED);
+
     }
 
     @PutMapping("/employeess/{id}")
@@ -102,7 +126,15 @@ public class EmployeeController {
     public ResponseEntity<String>deleteEmployeeByName(@PathVariable String name){
         return new ResponseEntity<>(service.deleteEmployeeByName(name)+" id ",HttpStatus.OK);
     }
+
+@GetMapping("/department")
+        public List<Department> departments(){
+        return departmentRepository.findAll();
+        }
 }
+
+
+
 
 
 
