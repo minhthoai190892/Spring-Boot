@@ -27,7 +27,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-//    @NotNull(message = "Name can not null")
+    @NotNull(message = "Name can not null")
     @Column(name = "name")
     // @JsonProperty("full_name") //thay đổi tên trường khi sử dụng
     private String name;
@@ -35,7 +35,7 @@ public class Employee {
     // @JsonIgnore //đánh dấu ẩn tên trường
     private Long age;
     @Column(name = "location")
-//    @NotBlank(message = "Location not blank")
+    @NotBlank(message = "Location not blank")
     private String location;
     @Column(name = "email")
     @Email(message = "Email invalid")
@@ -43,7 +43,6 @@ public class Employee {
     @JoinColumn(name = "department_id")
     @OneToOne
     private Department department;
-
     public Employee(EmployeeRequest request) {
         this.name = request.getName();
 

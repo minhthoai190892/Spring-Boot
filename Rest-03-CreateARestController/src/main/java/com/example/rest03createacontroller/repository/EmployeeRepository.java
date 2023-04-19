@@ -38,4 +38,6 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     @Query("delete FROM Employee where name=:name")
     Integer deleteEmployeeByName(String name);
 
+    @Query("from Employee where department.name=:name")
+    List<Employee> findByDepartment(String name);
 }
