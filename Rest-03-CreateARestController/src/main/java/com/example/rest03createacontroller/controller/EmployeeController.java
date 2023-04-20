@@ -107,21 +107,21 @@ public class EmployeeController {
 
     }
 
-    @PostMapping("/employeessMany")
-//    http://localhost:8080/employeessMany
-    public ResponseEntity<String> saveEmployeeM(@Valid @RequestBody EmployeeManyRequest employeeManyRequest) {
-        //create employee object
-        Employee employee = new Employee(employeeManyRequest);
-        employee = employeeRepository.save(employee);
-        for (String s:employeeManyRequest.getDepartment()
-             ) {
-            DepartmentMany departmentMany = new DepartmentMany();
-            departmentMany.setName(s);
-            departmentMany.setEmployee(employee);
-            departmentManyRepository.save(departmentMany);
-        }
-      return new ResponseEntity<>("Record saved successfully",HttpStatus.CREATED);
-    }
+//    @PostMapping("/employeessMany")
+////    http://localhost:8080/employeessMany
+//    public ResponseEntity<String> saveEmployeeM(@Valid @RequestBody EmployeeManyRequest employeeManyRequest) {
+//        //create employee object
+//        Employee employee = new Employee(employeeManyRequest);
+//        employee = employeeRepository.save(employee);
+//        for (String s:employeeManyRequest.getDepartment()
+//             ) {
+//            DepartmentMany departmentMany = new DepartmentMany();
+//            departmentMany.setName(s);
+//            departmentMany.setEmployee(employee);
+//            departmentManyRepository.save(departmentMany);
+//        }
+//      return new ResponseEntity<>("Record saved successfully",HttpStatus.CREATED);
+//    }
 
     @PutMapping("/employeess/{id}")
 //    http://localhost:8080/employeess/2

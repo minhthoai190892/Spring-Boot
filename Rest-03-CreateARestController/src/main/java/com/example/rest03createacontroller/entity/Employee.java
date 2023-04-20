@@ -57,9 +57,9 @@ public class Employee {
     private Date updateAt;
 
 
-    public Employee(EmployeeManyRequest employeeManyRequest) {
-        this.name = employeeManyRequest.getName();
-    }
+//    public Employee(EmployeeManyRequest employeeManyRequest) {
+//        this.name = employeeManyRequest.getName();
+//    }
 }
 
 
