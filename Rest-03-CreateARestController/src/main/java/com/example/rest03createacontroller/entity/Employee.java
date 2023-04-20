@@ -1,5 +1,6 @@
 package com.example.rest03createacontroller.entity;
 
+import com.example.rest03createacontroller.request.EmployeeManyRequest;
 import com.example.rest03createacontroller.request.EmployeeRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,7 +28,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @NotNull(message = "Name can not null")
+//    @NotNull(message = "Name can not null")
     @Column(name = "name")
     // @JsonProperty("full_name") //thay đổi tên trường khi sử dụng
     private String name;
@@ -35,10 +36,10 @@ public class Employee {
     // @JsonIgnore //đánh dấu ẩn tên trường
     private Long age;
     @Column(name = "location")
-    @NotBlank(message = "Location not blank")
+//    @NotBlank(message = "Location not blank")
     private String location;
     @Column(name = "email")
-    @Email(message = "Email invalid")
+//    @Email(message = "Email invalid")
     private String email;
     @JoinColumn(name = "department_id")
     @OneToOne
@@ -56,6 +57,9 @@ public class Employee {
     private Date updateAt;
 
 
+    public Employee(EmployeeManyRequest employeeManyRequest) {
+        this.name = employeeManyRequest.getName();
+    }
 }
 
 

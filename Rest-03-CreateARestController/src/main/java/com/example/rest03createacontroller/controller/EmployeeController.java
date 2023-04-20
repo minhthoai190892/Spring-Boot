@@ -1,9 +1,12 @@
 package com.example.rest03createacontroller.controller;
 
 import com.example.rest03createacontroller.entity.Department;
+import com.example.rest03createacontroller.entity.DepartmentMany;
 import com.example.rest03createacontroller.entity.Employee;
+import com.example.rest03createacontroller.repository.DepartmentManyRepository;
 import com.example.rest03createacontroller.repository.DepartmentRepository;
 import com.example.rest03createacontroller.repository.EmployeeRepository;
+import com.example.rest03createacontroller.request.EmployeeManyRequest;
 import com.example.rest03createacontroller.request.EmployeeRequest;
 import com.example.rest03createacontroller.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -25,6 +28,7 @@ public class EmployeeController {
     private EmployeeService service;
     private DepartmentRepository departmentRepository;
     private EmployeeRepository employeeRepository;
+    private DepartmentManyRepository departmentManyRepository;
 
     //injection
 //    @Autowired
@@ -33,10 +37,11 @@ public class EmployeeController {
 //    }
     @Autowired
 
-    public EmployeeController(EmployeeService service, DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
+    public EmployeeController(DepartmentManyRepository departmentManyRepository,EmployeeService service, DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         this.service = service;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
+        this.departmentManyRepository = departmentManyRepository;
     }
 
     @Value("${app.name}")
@@ -100,6 +105,22 @@ public class EmployeeController {
         employee = employeeRepository.save(employee);
         return new ResponseEntity<>(employee, HttpStatus.CREATED);
 
+    }
+
+    @PostMapping("/employeessMany")
+//    http://localhost:8080/employeessMany
+    public ResponseEntity<String> saveEmployeeM(@Valid @RequestBody EmployeeManyRequest employeeManyRequest) {
+        //create employee object
+        Employee employee = new Employee(employeeManyRequest);
+        employee = employeeRepository.save(employee);
+        for (String s:employeeManyRequest.getDepartment()
+             ) {
+            DepartmentMany departmentMany = new DepartmentMany();
+            departmentMany.setName(s);
+            departmentMany.setEmployee(employee);
+            departmentManyRepository.save(departmentMany);
+        }
+      return new ResponseEntity<>("Record saved successfully",HttpStatus.CREATED);
     }
 
     @PutMapping("/employeess/{id}")
