@@ -25,16 +25,17 @@ public class EmployeeController {
     private EmployeeService service;
     private DepartmentRepository departmentRepository;
     private EmployeeRepository employeeRepository;
+
     //injection
 //    @Autowired
 //    public EmployeeController(EmployeeService service) {
 //        this.service = service;
 //    }
-@Autowired
+    @Autowired
 
-    public EmployeeController(EmployeeService service, DepartmentRepository departmentRepository,EmployeeRepository employeeRepository) {
+    public EmployeeController(EmployeeService service, DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         this.service = service;
-     this.employeeRepository = employeeRepository;
+        this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
     }
 
@@ -56,9 +57,10 @@ public class EmployeeController {
 
     @GetMapping("/employeess")
 //    http://localhost:8080/employeess
-    public ResponseEntity<List<Employee>> getEmployees1(@RequestParam Integer pageNumber,@RequestParam Integer pageSize) {
+//    http://localhost:8080/api/v1/employeess?pageNumber=0&pageSize=10
+    public ResponseEntity<List<Employee>> getEmployees1(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
 
-       return new ResponseEntity<List<Employee>>(service.getEmployees(pageNumber,pageSize), HttpStatus.OK);
+        return new ResponseEntity<List<Employee>>(service.getEmployees(pageNumber, pageSize), HttpStatus.OK);
     }
 
     @GetMapping("/employeess/{id}")
@@ -86,14 +88,17 @@ public class EmployeeController {
         //set value for department
         department.setName(employeeRequest.getDepartment());
         //save Department
-        department= departmentRepository.save(department);
+        department = departmentRepository.save(department);
 
         //create new Employee
         Employee employee = new Employee();
         employee.setDepartment(department);
         employee.setName(employeeRequest.getName());
+        employee.setAge(employeeRequest.getAge());
+        employee.setLocation(employeeRequest.getLocation());
+        employee.setEmail(employeeRequest.getEmail());
         employee = employeeRepository.save(employee);
-        return new ResponseEntity<>(employee,HttpStatus.CREATED);
+        return new ResponseEntity<>(employee, HttpStatus.CREATED);
 
     }
 
@@ -109,28 +114,39 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name) {
         return new ResponseEntity<>(service.getEmployeesByName(name), HttpStatus.OK);
     }
+
     @GetMapping("/employeess/findByNameAndLocation")
-    public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name, @RequestParam String location){
-    return new ResponseEntity<>(service.getEmployeeByNameAndLocation(name,location),HttpStatus.OK);
+    public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name, @RequestParam String location) {
+        return new ResponseEntity<>(service.getEmployeeByNameAndLocation(name, location), HttpStatus.OK);
     }
+
     @GetMapping("/employeess/filterByKeyword")
-    public ResponseEntity<List<Employee>> getEmployeeByKeyword(@RequestParam String name){
+    public ResponseEntity<List<Employee>> getEmployeeByKeyword(@RequestParam String name) {
 
-        return new ResponseEntity<>(service.getEmployeesByKeyword(name),HttpStatus.OK);
+        return new ResponseEntity<>(service.getEmployeesByKeyword(name), HttpStatus.OK);
     }
+
     @GetMapping("/employeess/{name}/{location}")
-    public ResponseEntity<List<Employee>>getEmployeesByNameAndLocation(@PathVariable String name, @PathVariable String location){
-        return new ResponseEntity<>(service.getEmployeesByNameOrLocation(name,location),HttpStatus.OK);
-    }
-    @GetMapping("/employeess/delete/{name}")
-    public ResponseEntity<String>deleteEmployeeByName(@PathVariable String name){
-        return new ResponseEntity<>(service.deleteEmployeeByName(name)+" id ",HttpStatus.OK);
+    public ResponseEntity<List<Employee>> getEmployeesByNameAndLocation(@PathVariable String name, @PathVariable String location) {
+        return new ResponseEntity<>(service.getEmployeesByNameOrLocation(name, location), HttpStatus.OK);
     }
 
-@GetMapping("/department")
-        public List<Department> departments(){
+    @GetMapping("/employeess/delete/{name}")
+    public ResponseEntity<String> deleteEmployeeByName(@PathVariable String name) {
+        return new ResponseEntity<>(service.deleteEmployeeByName(name) + " id ", HttpStatus.OK);
+    }
+
+    @GetMapping("/department")
+    public List<Department> departments() {
         return departmentRepository.findAll();
-        }
+    }
+    @GetMapping("/employeess/filter/{name}")
+    public ResponseEntity<List<Employee>> getEmployeeByDepartment(@PathVariable String name) {
+
+        return new ResponseEntity<>(employeeRepository.findByDepartment(name), HttpStatus.OK);
+    }
+
+
 }
 
 
