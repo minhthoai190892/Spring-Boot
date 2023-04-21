@@ -187,6 +187,10 @@ public class EmployeeController {
 
         return new ResponseEntity<>(employeeRepository.findByDepartment(name), HttpStatus.OK);
     }
+    @GetMapping("/employeess/query")
+    public ResponseEntity<List<Employee>> queryListEmployee(){
+        return  new ResponseEntity<>(employeeRepository.findAll(),HttpStatus.OK);
+    }
 
 
 }
