@@ -10,13 +10,14 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @ToString
-@Table(name = "department")
-public class Department {
+@Table(name = "tbl_department_many")
+public class DepartmentMany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToOne(mappedBy ="department" )
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
 

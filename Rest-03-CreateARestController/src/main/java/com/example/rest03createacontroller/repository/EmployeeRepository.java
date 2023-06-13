@@ -17,6 +17,8 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long> {
     List<Employee> findByName(String name);
+    @Query(value = "select * from tbl_employee",nativeQuery = true)
+    List<Employee> findAll();
 
     //    select * from table where name="key" and location="key";
     List<Employee> findByNameAndLocation(String name, String location);

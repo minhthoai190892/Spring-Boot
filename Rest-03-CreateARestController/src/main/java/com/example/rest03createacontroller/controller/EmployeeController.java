@@ -1,10 +1,14 @@
 package com.example.rest03createacontroller.controller;
 
 import com.example.rest03createacontroller.entity.Department;
+import com.example.rest03createacontroller.entity.DepartmentMany;
 import com.example.rest03createacontroller.entity.Employee;
+import com.example.rest03createacontroller.repository.DepartmentManyRepository;
 import com.example.rest03createacontroller.repository.DepartmentRepository;
 import com.example.rest03createacontroller.repository.EmployeeRepository;
+import com.example.rest03createacontroller.request.EmployeeManyRequest;
 import com.example.rest03createacontroller.request.EmployeeRequest;
+import com.example.rest03createacontroller.respone.EmployeeResponse;
 import com.example.rest03createacontroller.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //nhận biết class controller
@@ -25,6 +30,7 @@ public class EmployeeController {
     private EmployeeService service;
     private DepartmentRepository departmentRepository;
     private EmployeeRepository employeeRepository;
+    private DepartmentManyRepository departmentManyRepository;
 
     //injection
 //    @Autowired
@@ -33,10 +39,11 @@ public class EmployeeController {
 //    }
     @Autowired
 
-    public EmployeeController(EmployeeService service, DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
+    public EmployeeController(DepartmentManyRepository departmentManyRepository,EmployeeService service, DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
         this.service = service;
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
+        this.departmentManyRepository = departmentManyRepository;
     }
 
     @Value("${app.name}")
@@ -102,6 +109,41 @@ public class EmployeeController {
 
     }
 
+    @GetMapping("/employeess/manny")
+    //http://localhost:8080/api/v1/employeess/manny
+    public ResponseEntity<List<EmployeeResponse>>listResponseEntity(){
+        List<Employee> list = employeeRepository.findAll();
+        List<EmployeeResponse>responseList = new ArrayList<>();
+        list.forEach(employee -> {
+            EmployeeResponse employeeResponse = new EmployeeResponse();
+            employeeResponse.setId(employee.getId());
+            employeeResponse.setEmployeeName(employee.getName());
+            List<String> depts = new ArrayList<>();
+            for (DepartmentMany departmentMany:employee.getDepartmentManyList()
+                 ) {
+                depts.add(departmentMany.getName());
+            }
+            employeeResponse.setDepartment(depts);
+            responseList.add(employeeResponse);
+        });
+        return new ResponseEntity<>(responseList,HttpStatus.OK);
+    }
+    @PostMapping("/employeessMany")
+//    http://localhost:8080/api/v1/employeessMany
+    public ResponseEntity<String> saveEmployeeM(@Valid @RequestBody EmployeeManyRequest employeeManyRequest) {
+        //create employee object
+        Employee employee = new Employee(employeeManyRequest);
+        employee = employeeRepository.save(employee);
+        for (String s:employeeManyRequest.getDepartment()
+             ) {
+            DepartmentMany departmentMany = new DepartmentMany();
+            departmentMany.setName(s);
+            departmentMany.setEmployee(employee);
+            departmentManyRepository.save(departmentMany);
+        }
+      return new ResponseEntity<>("Record saved successfully",HttpStatus.CREATED);
+    }
+
     @PutMapping("/employeess/{id}")
 //    http://localhost:8080/employeess/2
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
@@ -144,6 +186,10 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getEmployeeByDepartment(@PathVariable String name) {
 
         return new ResponseEntity<>(employeeRepository.findByDepartment(name), HttpStatus.OK);
+    }
+    @GetMapping("/employeess/query")
+    public ResponseEntity<List<Employee>> queryListEmployee(){
+        return  new ResponseEntity<>(employeeRepository.findAll(),HttpStatus.OK);
     }
 
 

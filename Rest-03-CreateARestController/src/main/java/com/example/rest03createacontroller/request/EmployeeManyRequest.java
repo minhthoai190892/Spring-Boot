@@ -7,11 +7,11 @@ import java.util.List;
 
 @Getter
 @Setter
-public class EmployeeRequest {
+public class EmployeeManyRequest {
     private String name;
     private Long age;
     private String location;
     private String email;
-    private String department;
+    private List<String> department;
 
 }
